@@ -1,0 +1,10 @@
+.idea
+*.zip
+*.pickle
+training_results/*
+!training_results/.gitkeep
+plot_new/*
+**/__pycache__/*
+outputs/*
+cloud_checkpoint/*
+checkpoints/*

@@ -1,0 +1,34 @@
+env:
+  render_mode: null
+  number_of_agents: 3
+  number_of_stags: 1
+  number_of_plants: 1
+  grid_width: 5
+  grid_height: 5
+  plant_reward: 1
+  stag_reward: 5
+  mauling_punishment: 0
+  capture_power_needed_for_stag: 2
+  overcrowded_rids_stag: true
+  movement_punishment: 0
+  max_steps: 150
+  agent_configs: null
+  reset_configs: null
+  observation_mode: poison_2
+  action_mode: single
+  stag_respawn: true
+  plant_respawn: true
+  reset_simplified: false
+  stag_poisoned_chance: 0.5
+  knows_poisoning: ["agent_0"]
+  poison_death_turn: 5
+  poison_capture_punishment: -5
+  limited_vision: ["agent_0"]
+
+training:
+  trial_count: 1
+  num_iterations: 3000
+  checkpoint_interval: 1000
+  time_report_interval: 10
+  evaluation_interval: 100
+  checkpoints_dir: checkpoints
