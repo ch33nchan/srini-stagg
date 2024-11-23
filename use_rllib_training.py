@@ -76,7 +76,7 @@ pygame.quit()
 
 """
 # updated
- import ray
+import ray
 from ray.tune.registry import register_env
 from ray.rllib.env import ParallelPettingZooEnv
 from zoo_envs.env.marl_gwsh import MARL_GWSH
@@ -88,7 +88,7 @@ import json
 ray.init()
 
 # Load environment configuration
-with open('cloud_checkpoint/config.yaml', 'r') as file:
+with open('conf/config.yaml', 'r') as file:
     env_config = OmegaConf.load(file)['env']
 
 env_creator = lambda config: MARL_GWSH(**config)
@@ -98,7 +98,7 @@ register_env(
 )
 
 # Load the trained model
-model = Algorithm.from_checkpoint('cloud_checkpoint')
+model = Algorithm.from_checkpoint('conf')
 
 # Parameters for the experiment
 stag_probabilities = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]  # Stag disease probabilities
@@ -152,7 +152,7 @@ for stag_prob in stag_probabilities:
     print(f"Average collaboration rate for stag_prob={stag_prob}: {results[stag_prob]}")
 
 # Save results to a JSON file
-with open('cloud_checkpoint/collab_results.json', 'w') as file:
+with open('conf/collab_results.json', 'w') as file:
     json.dump(results, file, indent=4)
 
 ray.shutdown()
