@@ -1,6 +1,6 @@
 dill==0.3.7
 gymnasium==0.28.1
-numpy==1.26.4
+numpy==1.23.5  # Updated to meet SciPy requirements
 pygame==2.5.2
 ray==2.34.0
 ray[rllib]==2.34.0

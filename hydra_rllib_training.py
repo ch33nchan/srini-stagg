@@ -30,36 +30,38 @@ def training(cfg: DictConfig):
 
     num_gpu = 1 if torch.cuda.is_available() else 0
 
-    ppo_config = PPOConfig().environment(env="MARL_GWSH").env_runners(num_env_runners=3).training(
-        train_batch_size=512,
-        lr=2.5e-4,
-        gamma=0.99,
-        lambda_=0.95,
-        use_gae=True,
-        clip_param=0.3,
-        grad_clip=None,
-        entropy_coeff=0.01,
-        vf_loss_coeff=0.5,
-        sgd_minibatch_size=64,
-        num_sgd_iter=1,
-    ).debugging(log_level="ERROR").framework(framework="torch").resources(num_gpus=num_gpu).multi_agent(
-        policies=policies,
-        policy_mapping_fn=(lambda aid, *args, **kwargs: aid)
-    ).rl_module(
-        model_config_dict={
-            "fcnet_hiddens": [128, 64],
-            # "conv_filters": [[16, 4, 4], [32, 4, 2], [64, 3, 1]],
-            # "post_fcnet_hiddens": [64],
-            "use_lstm": True,
-            "lstm_cell_size": 64,
-            "lstm_use_prev_action": True,
-            "lstm_use_prev_reward": True,
-            "vf_share_layers": False,
-            "soft_horizon": True,
-            "no_done_at_end": False,
-            "horizon": 200, },
-        rl_module_spec=MultiAgentRLModuleSpec(
-            module_specs={p: SingleAgentRLModuleSpec() for p in policies},
+    # Configure PPO with corrected batch and sequence lengths
+    ppo_config = (PPOConfig()
+        .environment(env="MARL_GWSH")
+        .env_runners(num_env_runners=3)
+        .training(
+            train_batch_size=2048,  # Increased to accommodate larger minibatch size
+            lr=2.5e-4,
+            gamma=0.99,
+            lambda_=0.95,
+            use_gae=True,
+            clip_param=0.3,
+            grad_clip=None,
+            entropy_coeff=0.01,
+            vf_loss_coeff=0.5,
+            sgd_minibatch_size=256,  # Must be larger than max_seq_len
+            num_sgd_iter=1,
+            model={
+                "fcnet_hiddens": [128, 64],
+                "use_lstm": True,
+                "lstm_cell_size": 64,
+                "lstm_use_prev_action": True,
+                "lstm_use_prev_reward": True,
+                "vf_share_layers": False,
+                "max_seq_len": 150,  # Matches max_steps from config.yaml
+            }
+        )
+        .debugging(log_level="ERROR")
+        .framework(framework="torch")
+        .resources(num_gpus=num_gpu)
+        .multi_agent(
+            policies=policies,
+            policy_mapping_fn=(lambda aid, *args, **kwargs: aid)
         )
     )
 
