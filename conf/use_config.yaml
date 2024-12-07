@@ -1,5 +1,5 @@
 env:
-  render_mode: human
+  render_mode: null
   number_of_agents: 3
   number_of_stags: 1
   number_of_plants: 1
@@ -32,5 +32,5 @@ training:
   num_iterations: 3000
   checkpoint_interval: 1000
   time_report_interval: 10
-  evaluation_interval: 0
+  evaluation_interval: 100
   checkpoints_dir: checkpoints

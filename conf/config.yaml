@@ -27,7 +27,7 @@ env:
 
 training:
   trial_count: 1
-  num_iterations: 3000
+  num_iterations: 100  # Changed from 3000 to 100
   checkpoint_interval: 1000
   time_report_interval: 10
   evaluation_interval: 100
