@@ -8,3 +8,7 @@ plot_new/*
 outputs/*
 cloud_checkpoint/*
 checkpoints/*
+# Ignore large files
+marl_env/lib/python3.11/site-packages/pyarrow/libarrow.1801.dylib
+marl_env/lib/python3.11/site-packages/torch/lib/libtorch_cpu.dylib
+venv/lib/python3.9/site-packages/torch/lib/libtorch_cpu.dylib
