@@ -1,0 +1,1 @@
+{'final_metrics': None, 'convergence_iteration': 49, 'total_iterations': 50}
