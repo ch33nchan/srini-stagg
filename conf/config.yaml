@@ -27,8 +27,7 @@ env:
 
 training:
   trial_count: 1
-  num_iterations: 100  # Changed from 3000 to 100
-  checkpoint_interval: 1000
-  time_report_interval: 10
-  evaluation_interval: 100
-  checkpoints_dir: checkpoints
+  num_iterations: 50  # Reduced from 100 to 50 for quicker convergence testing
+  checkpoint_interval: 10
+  time_report_interval: 5
+  evaluation_interval: 10

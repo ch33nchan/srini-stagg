@@ -63,6 +63,7 @@ def training(cfg: DictConfig):
             policies=policies,
             policy_mapping_fn=(lambda aid, *args, **kwargs: aid)
         )
+        .reporting(enable_tensorboard=True)
     )
 
     ppo = ppo_config.build()
@@ -104,10 +105,18 @@ def training(cfg: DictConfig):
             rounded_reward_list = [float("%.2f" % reward) for reward in reward_list]
             print(f"Time elapsed for iteration {i}: {time_elapsed:.2f}, total time elapsed: {end_time - beginning_time:.2f}, current reward: {rounded_reward_list}")
         if cfg["training"]["evaluation_interval"] != 0 and i % cfg["training"]["evaluation_interval"] == 0:
-            result = eval_metrics(ppo, env_creator, env_config)
-            with open(eval_file, "a", newline="\n") as f:
-                writer = csv.writer(f, delimiter=",")
-                writer.writerow(result)
+            try:
+                result = eval_metrics(ppo, env_creator, env_config)
+                if result is not None:
+                    print(f"Iteration {i} metrics: {result}")
+                    with open(eval_file, "a", newline="\n") as f:
+                        writer = csv.writer(f, delimiter=",")
+                        writer.writerow(result)
+                else:
+                    print(f"Warning: eval_metrics returned None at iteration {i}")
+            except Exception as eval_error:
+                print(f"Error during evaluation at iteration {i}: {eval_error}")
+                continue
         if i % cfg["training"]["checkpoint_interval"] == 0:
             checkpoints_dir_i = os.path.join(checkpoints_dir, f"checkpoint_{i}")
             ppo.save(checkpoints_dir_i)
