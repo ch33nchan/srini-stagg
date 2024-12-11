@@ -1,0 +1,37 @@
+10-17 appears that I was repeatedly running on one_hot_2 vs one_hot_3
+
+24-29 testing one hot encoding 0, 1, 2 against reset simplified
+
+58-61 try poisoned and simplified
+
+62-69 try poison death and punishment and know poisoning
+
+70-76 try different observation again
+
+78-81 try if three agents rid the stag
+
+84 relative_3 + poison = poison_2
+
+85 - 91 try different observation again when agent rids stag
+
+95 try adi settings with evaluation
+
+96 - 97 same but reset simplified
+
+98 - 103 try different observation again
+
+104 - 106 try again for relative_4
+
+107 poisoned_stag with new logic
+
+110 poisoned_2, find out only needing one agent to capture poisoned stag better
+
+111 poisoned_2 with limited observation
+
+112 - 117 try have context or not and stag poison chance 3,5,7
+
+122 train on constrained env, eval on complex env
+
+123 try 0.2 clip param on one_hot_2
+
+124 - 128 try different possibility of stag poison chance, with 0.3 clip
